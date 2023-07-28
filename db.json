@@ -1,0 +1,69 @@
+{
+  "mainInfo": {
+    "fio": "12",
+    "interviewer": "2",
+    "hr_user": "3",
+    "positionName": "4",
+    "positionLevel": "middle",
+    "hireStatus": "hire",
+    "justification": "5"
+  },
+  "candidateInfo": {
+    "candidateInfo": "efefwefdsfsdf"
+  },
+  "notes": [
+    {
+      "question": "1233",
+      "description": "324",
+      "id": 50.6364087362003
+    }
+  ],
+  "reviews": [
+    {
+      "skill": "1",
+      "evaluationSection": "2",
+      "grade": "3",
+      "description": "45",
+      "id": 33.97919379435781
+    },
+    {
+      "skill": "dfsfsd",
+      "evaluationSection": "sdfdsf",
+      "grade": "4",
+      "description": "dsfdsfsdfsdf",
+      "id": 87.40400912521282
+    },
+    {
+      "skill": "1",
+      "evaluationSection": "2",
+      "grade": "3",
+      "description": "4",
+      "id": 20.37542174289717
+    },
+    {
+      "skill": "1",
+      "evaluationSection": "2",
+      "grade": "3",
+      "description": "4fdgdfgdf",
+      "id": 29.560267448039525
+    },
+    {
+      "skill": "123",
+      "evaluationSection": "3213",
+      "grade": "3",
+      "description": "ffreferferf",
+      "id": 75.7053941152434
+    }
+  ],
+  "question": {
+    "question": "sdfdsfdsf"
+  },
+  "feedback": {
+    "firstImpression": "1",
+    "strengths": "2",
+    "weakSides": "3",
+    "allImpression": "4",
+    "recommendations": "5",
+    "additionally": "6"
+  }
+}

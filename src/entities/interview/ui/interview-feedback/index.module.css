@@ -1,0 +1,6 @@
+.feedbackTable tr {
+  grid-template-columns: 1fr 1fr;
+}
+.saveFeedbackButton {
+  margin-top: 10px;
+}

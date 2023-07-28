@@ -1,0 +1,30 @@
+.notesTable {
+  width: 100%;
+}
+.addNewNote_row {
+  display: grid;
+  grid-column-gap: 10px;
+}
+.notesTable tr,
+.addNewNote_row {
+  grid-template-columns: 1fr 1fr;
+}
+.notesTable textarea,
+.addNewNote_row textarea {
+  height: 100px;
+}
+.smallPrompt {
+  color: #cecdcd;
+  margin-bottom: 2px;
+}
+.actionRowButton {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+}
+.saveEditingTextArea {
+  width: auto;
+  height: 100%;
+  margin-left: 6px;
+  padding: 0px 6px;
+}

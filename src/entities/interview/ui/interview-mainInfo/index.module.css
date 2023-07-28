@@ -1,0 +1,42 @@
+.mainInfoTable tr {
+  grid-template-columns: 1fr 1fr;
+}
+
+.mainInfoTable__headerTd {
+  background: #e2eaf4;
+  border-radius: 7px;
+  padding: 6px;
+}
+
+.mainInfoTable input:not([type='radio']),
+.mainInfoTable select,
+.mainInfoTable textarea {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #e2e2e2;
+  border-radius: 7px;
+  padding-left: 6px;
+}
+.mainInfoTable .mainInfoTable__labelBlock {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+}
+.mainInfoTable__labelItem {
+  display: flex;
+  padding: 3px 5px;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.mainInfoTable__hireLabel {
+  background: #daf6ae;
+}
+
+.mainInfoTable__refuseLabel {
+  background: #ffbebe;
+}
+
+.buttonSaveChanging {
+  margin-top: 10px;
+}

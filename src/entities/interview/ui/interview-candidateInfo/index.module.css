@@ -1,0 +1,25 @@
+.infoAboutUserBlock {
+  height: 10rem;
+  overflow-y: auto;
+  resize: none;
+  width: 100%;
+  border: 1px solid #e2e2e2;
+  border-radius: 7px;
+  padding: 10px 5px;
+}
+.fileBox {
+  border: 1px solid #e2e2e2;
+  border-radius: 7px;
+  width: 100%;
+  padding: 10px 0px;
+  text-align: center;
+  display: block;
+}
+.fileBox button {
+  width: auto;
+  padding: 6px 10px;
+  margin-left: 6px;
+}
+.saveCandidateInfoButton {
+  margin-top: 10px;
+}
