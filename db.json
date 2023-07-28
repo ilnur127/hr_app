@@ -1,36 +1,41 @@
 {
   "mainInfo": {
-    "fio": "12",
-    "interviewer": "2",
-    "hr_user": "3",
-    "positionName": "4",
-    "positionLevel": "middle",
+    "fio": "121",
+    "interviewer": "21",
+    "hr_user": "31",
+    "positionName": "41",
+    "positionLevel": "pre-senior",
     "hireStatus": "hire",
-    "justification": "5"
+    "justification": "51"
   },
   "candidateInfo": {
-    "candidateInfo": "efefwefdsfsdf"
+    "candidateInfo": "efefwefdsfsdf1"
   },
   "notes": [
     {
-      "question": "1233",
-      "description": "324",
+      "question": "12331",
+      "description": "3241",
       "id": 50.6364087362003
+    },
+    {
+      "question": "dfsdfdsf",
+      "description": "dsfsdfsdf",
+      "id": 55.33487197918363
     }
   ],
   "reviews": [
     {
-      "skill": "1",
-      "evaluationSection": "2",
-      "grade": "3",
-      "description": "45",
+      "skill": "11",
+      "evaluationSection": "21",
+      "grade": "4",
+      "description": "451",
       "id": 33.97919379435781
     },
     {
-      "skill": "dfsfsd",
-      "evaluationSection": "sdfdsf",
-      "grade": "4",
-      "description": "dsfdsfsdfsdf",
+      "skill": "dfsfsd1",
+      "evaluationSection": "sdfdsf1",
+      "grade": "3",
+      "description": "dsfdsfsdfsdf1",
       "id": 87.40400912521282
     },
     {
@@ -53,17 +58,24 @@
       "grade": "3",
       "description": "ffreferferf",
       "id": 75.7053941152434
+    },
+    {
+      "skill": "dsfdsf",
+      "evaluationSection": "dsfsdfsdf",
+      "grade": "2",
+      "description": "fsdfsdfsdf",
+      "id": 54.4430663787145
     }
   ],
   "question": {
-    "question": "sdfdsfdsf"
+    "question": "sdfdsfdsf1"
   },
   "feedback": {
-    "firstImpression": "1",
-    "strengths": "2",
-    "weakSides": "3",
-    "allImpression": "4",
-    "recommendations": "5",
-    "additionally": "6"
+    "firstImpression": "11",
+    "strengths": "21",
+    "weakSides": "31",
+    "allImpression": "41",
+    "recommendations": "51",
+    "additionally": "61"
   }
 }
