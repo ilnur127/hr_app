@@ -1,4 +1,4 @@
-import { createEffect, createStore } from 'effector'
+import { createEffect, createEvent, createStore, sample } from 'effector'
 
 export type IReview = {
   id: number
@@ -8,7 +8,9 @@ export type IReview = {
   description: string
 }
 
-export const getReviewsEffect = createEffect(
+export const loadReviews = createEvent<string | undefined>()
+
+const loadReviewsFx = createEffect(
   async (interviewId: string | undefined): Promise<IReview[]> => {
     // const response = await fetch(`http://localhost:3001/interviews/${interviewId}/reviews`)
     const response = await fetch(`http://localhost:3001/reviews`)
@@ -17,7 +19,7 @@ export const getReviewsEffect = createEffect(
     return result
   }
 )
-export const createNewReviewEffect = createEffect(
+export const createNewReviewFx = createEffect(
   async ({
     data,
     interviewId,
@@ -38,14 +40,14 @@ export const createNewReviewEffect = createEffect(
     return result
   }
 )
-export const editReviewEffect = createEffect(
+export const editReviewFx = createEffect(
   async ({
     data,
     interviewId,
   }: {
     data: IReview
     interviewId: string | undefined
-  }) => {
+  }): Promise<IReview> => {
     // const response = await fetch(`http://localhost:3001/interviews/${interviewId}/reviews/${data.id}`,
     const response = await fetch(`http://localhost:3001/reviews/${data.id}`, {
       method: 'PUT',
@@ -61,15 +63,30 @@ export const editReviewEffect = createEffect(
 )
 
 export const $reviewsData = createStore<IReview[]>([])
-  .on(getReviewsEffect.doneData, (_store, reviews) => reviews)
-  .on(createNewReviewEffect.doneData, (store, newReview) => [
-    ...store,
-    newReview,
-  ])
-  .on(editReviewEffect.doneData, (store, editReview) =>
-    store.map((review) => (review.id === editReview.id ? editReview : review))
-  )
 
-export const $isLoadingReviews = getReviewsEffect.pending
-export const $isCreatingNewReview = createNewReviewEffect.pending
-export const $isEditingReview = editReviewEffect.pending
+sample({
+  clock: loadReviews,
+  target: loadReviewsFx,
+})
+sample({
+  clock: loadReviewsFx.doneData,
+  target: $reviewsData,
+})
+
+sample({
+  clock: createNewReviewFx.doneData,
+  source: $reviewsData,
+  fn: (store, newReview) => [...store, newReview],
+  target: $reviewsData,
+})
+sample({
+  clock: editReviewFx.doneData,
+  source: $reviewsData,
+  fn: (store, editReview) =>
+    store.map((review) => (review.id === editReview.id ? editReview : review)),
+  target: $reviewsData,
+})
+
+export const $isLoadingReviews = loadReviewsFx.pending
+export const $isCreatingNewReview = createNewReviewFx.pending
+export const $isEditingReview = editReviewFx.pending

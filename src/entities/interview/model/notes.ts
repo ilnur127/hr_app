@@ -1,4 +1,4 @@
-import { createEffect, createStore } from 'effector'
+import { createEffect, createEvent, createStore, sample } from 'effector'
 
 export type INote = {
   id: number
@@ -6,7 +6,9 @@ export type INote = {
   description: string
 }
 
-export const getNotesEffect = createEffect(
+export const loadNotes = createEvent<string | undefined>()
+
+const loadNotesFx = createEffect(
   async (interviewId: string | undefined): Promise<INote[]> => {
     // const response = await fetch(`http://localhost:3001/interviews/${interviewId}/notes`)
     const response = await fetch(`http://localhost:3001/notes`)
@@ -15,7 +17,7 @@ export const getNotesEffect = createEffect(
     return result
   }
 )
-export const createNewNoteEffect = createEffect(
+export const createNewNoteFx = createEffect(
   async ({
     data,
     interviewId,
@@ -36,14 +38,14 @@ export const createNewNoteEffect = createEffect(
     return result
   }
 )
-export const editNoteEffect = createEffect(
+export const editNoteFx = createEffect(
   async ({
     data,
     interviewId,
   }: {
     data: INote
     interviewId: string | undefined
-  }) => {
+  }): Promise<INote> => {
     const response = await fetch(`http://localhost:3001/notes/${data.id}`, {
       method: 'PUT',
       headers: {
@@ -58,12 +60,24 @@ export const editNoteEffect = createEffect(
 )
 
 export const $notesData = createStore<INote[]>([])
-  .on(getNotesEffect.doneData, (_store, reviews) => reviews)
-  .on(createNewNoteEffect.doneData, (store, newNote) => [...store, newNote])
-  .on(editNoteEffect.doneData, (store, editNote) =>
-    store.map((note) => (note.id === editNote.id ? editNote : note))
-  )
 
-export const $isLoadingNotes = getNotesEffect.pending
-export const $isCreatingNewNote = createNewNoteEffect.pending
-export const $isEditingNote = editNoteEffect.pending
+sample({ clock: loadNotes, target: loadNotesFx })
+sample({ clock: loadNotesFx.doneData, target: $notesData })
+
+sample({
+  clock: createNewNoteFx.doneData,
+  source: $notesData,
+  fn: (store: INote[], newNote: INote) => [...store, newNote],
+  target: $notesData,
+})
+sample({
+  clock: editNoteFx.doneData,
+  source: $notesData,
+  fn: (store: INote[], editNote: INote) =>
+    store.map((note) => (note.id === editNote.id ? editNote : note)),
+  target: $notesData,
+})
+
+export const $isLoadingNotes = loadNotesFx.pending
+export const $isCreatingNewNote = createNewNoteFx.pending
+export const $isEditingNote = editNoteFx.pending

@@ -6,13 +6,14 @@ import {
   sample,
 } from 'effector'
 
+export const loadCandidateInfo = createEvent<string | undefined>()
 export const changeCandidateInfo = createEvent<string>()
 export const saveCandidateChanging = createEvent<{
   files: FileList | null | undefined
   interviewId: string | undefined
 }>()
 
-export const loadCandidateInfo = createEffect(
+const loadCandidateInfoFx = createEffect(
   async (interviewId: string | undefined) => {
     // const response = await fetch(`http://localhost:3001/interviews/${interviewId}/candidateInfo`)
     const response = await fetch(`http://localhost:3001/candidateInfo`)
@@ -47,14 +48,18 @@ const submitingForm = createEffect(
   }
 )
 
-export const $candidateInfoData = createStore('').on(
-  loadCandidateInfo.doneData,
-  (_store, candidateInfo) => candidateInfo.candidateInfo
-)
+export const $candidateInfoData = createStore('')
 
 forward({
   from: changeCandidateInfo,
   to: $candidateInfoData,
+})
+
+sample({ clock: loadCandidateInfo, target: loadCandidateInfoFx })
+sample({
+  clock: loadCandidateInfoFx.doneData,
+  fn: (candidateInfo) => candidateInfo.candidateInfo,
+  target: $candidateInfoData,
 })
 
 sample({
@@ -69,4 +74,4 @@ sample({
 })
 
 export const $isSubmitingCandidateInfo = submitingForm.pending
-export const $isLoadingCandidateInfo = loadCandidateInfo.pending
+export const $isLoadingCandidateInfo = loadCandidateInfoFx.pending

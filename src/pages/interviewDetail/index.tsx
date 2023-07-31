@@ -56,10 +56,10 @@ export function InterviewDetail() {
     interviewModel.loadCandidateInfo(interviewId)
   }, [interviewId])
   useEffect(() => {
-    interviewModel.getNotesEffect(interviewId)
+    interviewModel.loadNotes(interviewId)
   }, [interviewId])
   useEffect(() => {
-    interviewModel.getReviewsEffect(interviewId)
+    interviewModel.loadReviews(interviewId)
   }, [interviewId])
   useEffect(() => {
     interviewModel.loadQuestions(interviewId)
@@ -103,14 +103,12 @@ export function InterviewDetail() {
           loading={isCreatingNewNote || isEditingNote}
           notes={notes}
           addNewNote={(data) =>
-            interviewModel.createNewNoteEffect({
+            interviewModel.createNewNoteFx({
               data,
               interviewId,
             })
           }
-          editNote={(data) =>
-            interviewModel.editNoteEffect({ data, interviewId })
-          }
+          editNote={(data) => interviewModel.editNoteFx({ data, interviewId })}
         />
       ) : (
         <Loader />
@@ -120,13 +118,13 @@ export function InterviewDetail() {
           loading={isCreatingNewReview || isEditingReview}
           reviews={reviews}
           addNewReview={(data) =>
-            interviewModel.createNewReviewEffect({
+            interviewModel.createNewReviewFx({
               data,
               interviewId,
             })
           }
           editReview={(data) =>
-            interviewModel.editReviewEffect({ data, interviewId })
+            interviewModel.editReviewFx({ data, interviewId })
           }
         />
       ) : (

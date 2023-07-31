@@ -26,6 +26,7 @@ export type IMainInfoData = {
   justification: string
 }
 
+export const loadMainInfo = createEvent<string | undefined>()
 export const changeMainInfoData = createEvent<IMainInfoData>()
 export const saveMainInfoChanging = createEvent<string | undefined>()
 
@@ -50,7 +51,7 @@ const submitingForm = createEffect(
     return result
   }
 )
-export const loadMainInfo = createEffect(
+const loadMainInfoFx = createEffect(
   async (interviewId: string | undefined): Promise<IMainInfoData> => {
     // const response = await fetch(`http://localhost:3001/interviews/${interviewId}/mainInfo`)
     const response = await fetch(`http://localhost:3001/mainInfo`)
@@ -67,12 +68,15 @@ export const $mainInfoData = createStore<IMainInfoData>({
   positionLevel: '',
   hireStatus: '',
   justification: '',
-}).on(loadMainInfo.doneData, (_store, mainInfo) => mainInfo)
+})
 
 forward({
   from: changeMainInfoData,
   to: $mainInfoData,
 })
+
+sample({ clock: loadMainInfo, target: loadMainInfoFx })
+sample({ clock: loadMainInfoFx.doneData, target: $mainInfoData })
 
 sample({
   clock: saveMainInfoChanging,
@@ -82,4 +86,4 @@ sample({
 })
 
 export const $isSubmitingMainInfo = submitingForm.pending
-export const $isLoadingMainInfo = loadMainInfo.pending
+export const $isLoadingMainInfo = loadMainInfoFx.pending

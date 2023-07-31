@@ -17,16 +17,15 @@ export type IFeedbackData = {
 
 export const changeFeedbackData = createEvent<IFeedbackData>()
 export const saveFeedbackData = createEvent<string | undefined>()
+export const loadFeedback = createEvent<string | undefined>()
 
-export const loadFeedback = createEffect(
-  async (interviewId: string | undefined) => {
-    // const response = await fetch(`http://localhost:3001/interviews/${interviewId}/feedback`)
-    const response = await fetch(`http://localhost:3001/feedback`)
-    const result = await response.json()
-    console.log(interviewId)
-    return result
-  }
-)
+const loadFeedbackFx = createEffect(async (interviewId: string | undefined) => {
+  // const response = await fetch(`http://localhost:3001/interviews/${interviewId}/feedback`)
+  const response = await fetch(`http://localhost:3001/feedback`)
+  const result = await response.json()
+  console.log(interviewId)
+  return result
+})
 const submitFeedbackData = createEffect(
   async ({
     data,
@@ -56,7 +55,16 @@ export const $feedbackData = createStore<IFeedbackData>({
   allImpression: '',
   recommendations: '',
   additionally: '',
-}).on(loadFeedback.doneData, (_store, feedback) => feedback)
+})
+
+sample({
+  clock: loadFeedback,
+  target: loadFeedbackFx,
+})
+sample({
+  clock: loadFeedbackFx.doneData,
+  target: $feedbackData,
+})
 
 forward({
   from: changeFeedbackData,
@@ -71,4 +79,4 @@ sample({
 })
 
 export const $isSubmitingFeedback = submitFeedbackData.pending
-export const $isLoadingFeedback = loadFeedback.pending
+export const $isLoadingFeedback = loadFeedbackFx.pending

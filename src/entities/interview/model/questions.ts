@@ -8,8 +8,9 @@ import {
 
 export const changeQuestion = createEvent<string>()
 export const saveQuestion = createEvent<string | undefined>()
+export const loadQuestions = createEvent<string | undefined>()
 
-export const loadQuestions = createEffect(
+const loadQuestionsFx = createEffect(
   async (interviewId: string | undefined) => {
     // const response = await fetch(`http://localhost:3001/interviews/${interviewId}/question`)
     const response = await fetch(`http://localhost:3001/question`)
@@ -40,10 +41,7 @@ const submitQuestion = createEffect(
   }
 )
 
-export const $questionData = createStore('').on(
-  loadQuestions.doneData,
-  (_store, question) => question.question
-)
+export const $questionData = createStore('')
 
 forward({
   from: changeQuestion,
@@ -57,5 +55,14 @@ sample({
   fn: (store, interviewId) => ({ question: store, interviewId }),
 })
 
+sample({
+  clock: loadQuestions,
+  target: loadQuestionsFx,
+})
+sample({
+  clock: loadQuestionsFx.doneData,
+  target: $questionData,
+})
+
 export const $isSubmitingQuestion = submitQuestion.pending
-export const $isLoadingQuestion = loadQuestions.pending
+export const $isLoadingQuestion = loadQuestionsFx.pending
